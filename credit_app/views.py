@@ -54,7 +54,7 @@ def check_eligibility(request):
             except Customer.DoesNotExist:
                 return Response({'error': 'Customer not found'}, status=status.HTTP_404_NOT_FOUND)
             
-            #credit score
+            
             credit_score = calculate_credit_score(customer)
             
           
@@ -65,7 +65,7 @@ def check_eligibility(request):
                 approval = False
                 corrected_interest_rate = interest_rate
             else:
-                # Check approval based on credit score
+             
                 if credit_score > 50:
                     approval = True
                     corrected_interest_rate = interest_rate
@@ -115,7 +115,7 @@ def create_loan(request):
             current_loans = Loan.objects.filter(customer=customer, end_date__gte=timezone.now().date())
             total_current_emi = sum(loan.monthly_payment for loan in current_loans)
             
-            # Approval logic
+            
             if total_current_emi > (customer.monthly_salary * 0.5):
                 approval = False
                 message = "Total current EMIs exceed 50% of monthly salary"
@@ -141,7 +141,7 @@ def create_loan(request):
                 
                 monthly_installment = calculate_emi(loan_amount, corrected_interest_rate, tenure)
                 start_date = timezone.now().date()
-                end_date = start_date + timedelta(days=tenure*30)  # Approximate month as 30 days
+                end_date = start_date + timedelta(days=tenure*30)
                 
                 loan = Loan.objects.create(
                     customer=customer,
