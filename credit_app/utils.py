@@ -3,13 +3,13 @@ from datetime import datetime, timedelta
 from .models import Loan
 
 def calculate_emi(principal, annual_rate, tenure_months):
-    """Calculate EMI using compound interest formula"""
+    
     monthly_rate = annual_rate / 12 / 100
     emi = (principal * monthly_rate * math.pow(1 + monthly_rate, tenure_months)) / (math.pow(1 + monthly_rate, tenure_months) - 1)
     return round(emi, 2)
 
 def calculate_credit_score(customer):
-    """Calculate credit score (0-100) based on loan history"""
+    
     loans = Loan.objects.filter(customer=customer)
     
     if not loans.exists():
